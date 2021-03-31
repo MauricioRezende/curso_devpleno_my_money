@@ -10,6 +10,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Corrigir problema ao iniciar aplicação
+// https://stackoverflow.com/questions/66734503/react-npm-start-not-working-no-version-of-chokidar-available
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

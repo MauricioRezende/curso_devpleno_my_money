@@ -73,6 +73,7 @@ const Movimentacoes = (props) => {
             setDescricao('')
             setValor(0)
             data.refetch()
+
             setTimeout(() => {
                 dataMeses.refetch()
             }, 3000);
@@ -82,6 +83,46 @@ const Movimentacoes = (props) => {
     const removerMovimentacao = async(id) => {
         await remover('movimentacoes/' + props.match.params.data + '/' + id)
         data.refetch()
+
+        let entradas = 0
+        let saidas = 0
+
+        if(data.data){
+
+            if(valor > 0){
+                entradas = parseFloat(valor)
+            }else{
+                saidas = parseFloat(valor)
+            }
+
+            Object
+                .keys(data.data)
+                .filter(m => m !== id)
+                .map(movimentacao => {
+                    if(data.data[movimentacao].valor > 0){
+                        entradas += data.data[movimentacao].valor
+                    }else{
+                        saidas += data.data[movimentacao].valor
+                    }
+                })
+        }else{
+            if(valor > 0){
+                entradas = parseFloat(valor)
+            }else{
+                saidas = parseFloat(valor)
+            }
+        }
+                  
+        alterarMeses('meses/' + props.match.params.data, {
+            entradas,
+            previsao_entrada: 0,
+            previsao_saida: 0,
+            saidas
+        })
+
+        setTimeout(() => {
+            dataMeses.refetch()
+        }, 3000);
     }
 
     return (
